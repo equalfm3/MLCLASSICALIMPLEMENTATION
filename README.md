@@ -12,14 +12,23 @@ graph TD
     A --> C[Unsupervised]
     A --> D[Ensemble]
     A --> E[Optimization]
+    
     B --> B1[Classification]
     B --> B2[Regression]
+    
     C --> C1[Clustering]
     C --> C2[Dimensionality Reduction]
     C --> C3[Association Rules]
+    
     D --> D1[Bagging]
     D --> D2[Boosting]
     D --> D3[Voting]
+    
+    style A fill:#1a1a2e,color:#fff
+    style B fill:#16213e,color:#fff
+    style C fill:#0f3460,color:#fff
+    style D fill:#533483,color:#fff
+    style E fill:#e94560,color:#fff
 ```
 
 ---
@@ -38,11 +47,14 @@ graph TD
 
 ```mermaid
 graph LR
-    A[Input x] --> B[Kernel Map φ]
-    B --> C["Hyperplane w·φ+b=0"]
-    C --> D{Sign?}
-    D -->|+1| E[Class A]
-    D -->|-1| F[Class B]
+    subgraph SVM Decision Boundary
+        direction LR
+        A[Input x] --> B[Kernel Map φ]
+        B --> C[Hyperplane w·φ+b=0]
+        C --> D{Sign?}
+        D -->|+1| E[Class A]
+        D -->|-1| F[Class B]
+    end
 ```
 
 ### Regression
@@ -57,9 +69,11 @@ graph LR
 
 ```mermaid
 graph LR
-    A["OLS — No penalty"] --> B["Ridge — L2: shrinks coefficients"]
-    B --> C["Elastic Net — L1+L2: mixed"]
-    C --> D["Lasso — L1: zeros out features"]
+    subgraph Regularization Spectrum
+        A[OLS<br/>No penalty] --> B[Ridge<br/>L2: shrinks coefficients]
+        B --> C[Elastic Net<br/>L1+L2: mixed]
+        C --> D[Lasso<br/>L1: zeros out features]
+    end
 ```
 
 ---
@@ -77,11 +91,13 @@ graph LR
 
 ```mermaid
 graph TD
-    A[Initialize centroids] --> B[Assign points to nearest centroid]
-    B --> C[Recompute centroids]
-    C --> D{Converged?}
-    D -->|No| B
-    D -->|Yes| E[Final clusters]
+    subgraph K-Means Iteration
+        A[Initialize centroids] --> B[Assign points to nearest centroid]
+        B --> C[Recompute centroids]
+        C --> D{Converged?}
+        D -->|No| B
+        D -->|Yes| E[Final clusters]
+    end
 ```
 
 ### Dimensionality Reduction
@@ -104,23 +120,22 @@ graph TD
 
 ```mermaid
 graph TD
-    A1[Bootstrap Sample 1] --> M1[Model 1]
-    A2[Bootstrap Sample 2] --> M2[Model 2]
-    A3[Bootstrap Sample n] --> M3[Model n]
-    M1 --> V[Aggregate Vote/Average]
-    M2 --> V
-    M3 --> V
-```
+    subgraph Bagging
+        A1[Bootstrap Sample 1] --> M1[Model 1]
+        A2[Bootstrap Sample 2] --> M2[Model 2]
+        A3[Bootstrap Sample n] --> M3[Model n]
+        M1 --> V[Aggregate Vote/Average]
+        M2 --> V
+        M3 --> V
+    end
 
-**Boosting:**
-
-```mermaid
-graph LR
-    B1[Weak Learner 1] --> W1[Reweight errors]
-    W1 --> B2[Weak Learner 2]
-    B2 --> W2[Reweight errors]
-    W2 --> B3[Weak Learner n]
-    B3 --> S[Weighted Sum]
+    subgraph Boosting
+        B1[Weak Learner 1] --> W1[Reweight errors]
+        W1 --> B2[Weak Learner 2]
+        B2 --> W2[Reweight errors]
+        W2 --> B3[Weak Learner n]
+        B3 --> S[Weighted Sum]
+    end
 ```
 
 | Algorithm | Key Formula | Notebook |
